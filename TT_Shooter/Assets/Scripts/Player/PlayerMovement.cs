@@ -19,9 +19,13 @@ public class PlayerMovement : MonoBehaviour
     private float runStart = 0;
     private float myVelocity = 0;
 
+    private Vector3 oldMousePosition;
+
     private int curArm = 0;
     //private SelectArm selectArm;
     //private PlaySounds playSounds;
+
+    private GunShooting gunShooting;
 
 
     private void Awake()
@@ -30,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         //selectArm = GetComponent<SelectArm>();
         //playSounds = GetComponent<PlaySounds>();
+        gunShooting = GetComponent<GunShooting>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -41,6 +46,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Получаем позицию мыши на экране
+        Vector3 mousePosition = Input.mousePosition;
+        if (mousePosition != oldMousePosition)
+        {
+            TurnToCursor(mousePosition);
+            oldMousePosition = mousePosition;
+        }
+
         if (timer > 0f) timer -= Time.deltaTime;
         else
         {
@@ -98,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire1"))
         {
+            if (isAttack == false) gunShooting.Shoot();
             isAttack = true;
             
             //curArm = selectArm.ArmIndex;
@@ -115,6 +129,24 @@ public class PlayerMovement : MonoBehaviour
         Turn(hor);
     }
 
+    private void TurnToCursor(Vector3 mousePosition)
+    {
+        // Преобразуем экранные координаты в мировые
+        //Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
+        Vector3 worldMousePosition = new Vector3((mousePosition.x - Camera.main.pixelWidth / 2) / 10, 1, (mousePosition.y - Camera.main.pixelHeight / 2) / 10);
+        //Camera.main.c
+
+        // Получаем направление от персонажа к позиции мыши
+        Vector3 direction = worldMousePosition - transform.position;
+
+        //print($"h={Camera.main.pixelHeight} w={Camera.main.pixelWidth} mp={mousePosition}  wmp={worldMousePosition}  dir={direction}");
+
+        // Поворачиваем персонажа в сторону мыши
+        Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSmoothness * Time.deltaTime);
+        myVelocity += 0.1f;
+    }
+
     public void PlayerLoss()
     {
         isLoss = true;
@@ -122,6 +154,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Attack()
     {
+        
         anim.SetBool("IsRun", false);
         anim.SetBool("IsWalk", false);
         anim.SetBool("IsJump", false);
