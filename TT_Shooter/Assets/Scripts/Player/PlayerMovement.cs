@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 rotation = Vector3.zero;
     private float hor, ver;
     private Animator anim;
+    bool isGranade = false;
     bool isAttack = false;
     bool isJump = false;
     bool isLoss = false;
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     //private PlaySounds playSounds;
 
     private GunShooting gunShooting;
+    private TossGranade tossGranade;
 
 
     private void Awake()
@@ -35,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
         //selectArm = GetComponent<SelectArm>();
         //playSounds = GetComponent<PlaySounds>();
         gunShooting = GetComponent<GunShooting>();
+        tossGranade = GetComponent<TossGranade>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -62,6 +65,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 anim.SetBool("IsDead", true);
                 tag = "Untagged";
+                return;
+            }
+
+            if (isGranade)
+            {
                 return;
             }
             
@@ -109,6 +117,15 @@ public class PlayerMovement : MonoBehaviour
         {
             //gameObject.GetComponent<SelectArm>().NextArm();
         }
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if (isGranade == false)
+            {
+                isGranade = true;
+                Granade();
+            }
+            //gameObject.GetComponent<SelectArm>().NextArm();
+        }
         if (Input.GetButtonDown("Fire1"))
         {
             if (isAttack == false) gunShooting.Shoot();
@@ -150,6 +167,24 @@ public class PlayerMovement : MonoBehaviour
     public void PlayerLoss()
     {
         isLoss = true;
+    }
+
+    public void Granade()
+    {
+        anim.SetBool("IsRun", false);
+        anim.SetBool("IsWalk", false);
+        anim.SetBool("IsJump", false);
+        //anim.SetBool("IsAttack", false);
+        anim.SetBool("IsGranade", true);
+
+        tossGranade.OnToss();
+        Invoke("EndGranade", 2.5f);
+    }
+
+    private void EndGranade()
+    {
+        anim.SetBool("IsGranade", false);
+        isGranade = false;
     }
 
     private void Attack()

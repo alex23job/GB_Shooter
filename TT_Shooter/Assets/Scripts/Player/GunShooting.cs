@@ -33,8 +33,12 @@ public class GunShooting : MonoBehaviour
             // ѕоказываем частицы в точке попадани€
             if (impactEffect != null)
             {
-                impactEffect.transform.position = hit.point;
-                impactEffect.Play();
+                ParticleSystem effect = Instantiate(impactEffect);
+                effect.transform.position = hit.point;
+                effect.Play();
+                Destroy(effect.gameObject, 1f);
+                //impactEffect.transform.position = hit.point;
+                //impactEffect.Play();
 
                 //GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 //sph.transform.localScale = new Vector3(0.1f, 0.1f, 0.01f);
