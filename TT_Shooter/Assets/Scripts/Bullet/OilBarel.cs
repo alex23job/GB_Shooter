@@ -9,8 +9,7 @@ public class OilBarel : MonoBehaviour, IFireBarel
     // Start is called before the first frame update
     void Start()
     {
-        oilFire.Stop();
-        
+        oilFire.Stop();        
     }
 
     public void FireBarel()
@@ -24,7 +23,6 @@ public class OilBarel : MonoBehaviour, IFireBarel
         if (direction.magnitude < 3)
         {
             oilFire.Play();
-            //print("oilFire.Play ?");
         }
     }
 }

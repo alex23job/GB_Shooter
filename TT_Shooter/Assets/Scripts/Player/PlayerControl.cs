@@ -9,6 +9,9 @@ public class PlayerControl : MonoBehaviour
     private PlayerMovement playerMovement;
     private TossGranade tossGranade;
     private PouchGranadeControl granadeControl;
+    [SerializeField] private UI_Control ui_Control;
+
+    private InventoryObject currentItem = null;
 
     private void Awake()
     {
@@ -48,5 +51,23 @@ public class PlayerControl : MonoBehaviour
     public void ChangeHP(int value)
     {
 
+    }
+
+    public void OnArmNextClick(int num)
+    {
+
+    }
+
+    public void SetCurrentItem(InventoryObject item)
+    {
+        currentItem = item;
+    }
+
+    public void TakeItem()
+    {
+        if (currentItem != null)
+        {
+            Destroy(currentItem.gameObject);
+        }
     }
 }

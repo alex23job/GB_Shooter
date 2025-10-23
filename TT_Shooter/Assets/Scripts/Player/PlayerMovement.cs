@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
 
     private GunShooting gunShooting;
     private TossGranade tossGranade;
+    private PlayerControl playerControl;
 
 
     private void Awake()
@@ -39,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
         //playSounds = GetComponent<PlaySounds>();
         gunShooting = GetComponent<GunShooting>();
         tossGranade = GetComponent<TossGranade>();
+        playerControl = GetComponent<PlayerControl>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -116,6 +118,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
+            playerControl.TakeItem();
             //gameObject.GetComponent<SelectArm>().NextArm();
         }
         if (Input.GetKeyDown(KeyCode.G))

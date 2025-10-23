@@ -16,7 +16,7 @@ public class ArmFire : MonoBehaviour
         //firePS = Instantiate(firePrefab);
         firePS = firePrefab;
         firePS.transform.position = firePoint.position;
-        FirePause();
+        StopFire();
     }
 
     public void SetModeFire(bool fire)

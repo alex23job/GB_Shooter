@@ -21,19 +21,13 @@ public class TankControl : MonoBehaviour, IFireBarel
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnFire(Vector3 granatePosition)
     {
         Vector3 direction = cabine.transform.position - granatePosition;
         if (direction.magnitude < 3)
         {
             oilFire.Play();
-            print("oilFire.Play ? (OnFire)");
+            //print("oilFire.Play ? (OnFire)");
         }
     }
 
@@ -49,7 +43,7 @@ public class TankControl : MonoBehaviour, IFireBarel
 
     public void FireBarel()
     {
-        print("oilFire.Play ? (FireBarel)");
+        //print("oilFire.Play ? (FireBarel)");
         oilFire.Play();
     }
 }
