@@ -1,27 +1,39 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class IsoCameraFollower : MonoBehaviour
 {
-    public Transform target; // Персонаж, за которым будет следовать камера
-    public float followSpeed = 5f; // Скорость, с которой камера будет следовать за персонажем
-    public float isoOffsetX = 10f; // Смещение по оси X
-    public float isoOffsetY = 5f; // Подъем по оси Y
-    public float isoOffsetZ = -10f; // Смещение по оси Z
+    [SerializeField] private Transform target; // РџРµСЂСЃРѕРЅР°Р¶, Р·Р° РєРѕС‚РѕСЂС‹Рј СЃР»РµРґСѓРµС‚ РєР°РјРµСЂР°
+    [SerializeField] private float zoomSpeed = 5f; // РЎРєРѕСЂРѕСЃС‚СЊ РїСЂРёР±Р»РёР¶РµРЅРёСЏ/СѓРґР°Р»РµРЅРёСЏ РєР°РјРµСЂС‹
+    [SerializeField] private float defaultDistance = 10f; // Р‘Р°Р·РѕРІР°СЏ РґРёСЃС‚Р°РЅС†РёСЏ РєР°РјРµСЂС‹ РѕС‚ РїРµСЂСЃРѕРЅР°Р¶Р°
+    [SerializeField] private float minDistance = 5f; // РњРёРЅРёРјР°Р»СЊРЅР°СЏ РґРёСЃС‚Р°РЅС†РёСЏ РєР°РјРµСЂС‹
+    [SerializeField] private float maxDistance = 20f; // РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РґРёСЃС‚Р°РЅС†РёСЏ РєР°РјРµСЂС‹
+    [SerializeField] private float lerpRate = 0.1f; // РЎРєРѕСЂРѕСЃС‚СЊ, СЃ РєРѕС‚РѕСЂРѕР№ РєР°РјРµСЂР° СЃР»РµРґСѓРµС‚ Р·Р° РїРµСЂСЃРѕРЅР°Р¶РµРј
+
+    private float currentDistance; // РўРµРєСѓС‰Р°СЏ РґРёСЃС‚Р°РЅС†РёСЏ РєР°РјРµСЂС‹
+
+    void Start()
+    {
+        currentDistance = defaultDistance;
+    }
 
     void LateUpdate()
     {
-        // Если целевого объекта нет, заканчиваем работу
-        if (target == null) return;
+        // РџРѕР»СѓС‡РёС‚СЊ РІСЂР°С‰РµРЅРёРµ РєРѕР»РµСЃР° РјС‹С€Рё
+        float scrollAmount = Input.GetAxis("Mouse ScrollWheel");
 
-        // Рассчитываем позицию камеры
-        Vector3 desiredPosition = target.position + new Vector3(isoOffsetX, isoOffsetY, isoOffsetZ);
+        // РћР±РЅРѕРІРёС‚СЊ РґРёСЃС‚Р°РЅС†РёСЋ РєР°РјРµСЂС‹
+        currentDistance -= scrollAmount * zoomSpeed;
+        currentDistance = Mathf.Clamp(currentDistance, minDistance, maxDistance);
 
-        // Медленно перемещаем камеру к новому положению
-        transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.deltaTime);
+        // Р’С‹С‡РёСЃР»РёС‚СЊ РїРѕР·РёС†РёСЋ РєР°РјРµСЂС‹ РїРѕРґ СѓРіР»РѕРј 45 РіСЂР°РґСѓСЃРѕРІ
+        Vector3 targetPosition = target.position + new Vector3(0, currentDistance, -currentDistance) * 0.707f; // sin(45)/cos(45)=sqrt(2)/2 в‰€ 0.707
 
-        // Наводим камеру на персонажа
+        // РЎР»РµРґРѕРІР°С‚СЊ Р·Р° РїРµСЂСЃРѕРЅР°Р¶РµРј СЃ РїР»Р°РІРЅС‹Рј РїРµСЂРµС…РѕРґРѕРј
+        transform.position = Vector3.Lerp(transform.position, targetPosition, lerpRate);
+
+        // РџРѕСЃС‚РѕСЏРЅРЅРѕ СЃРјРѕС‚СЂРёРј РЅР° РїРµСЂСЃРѕРЅР°Р¶Р°
         transform.LookAt(target.position);
     }
 }
