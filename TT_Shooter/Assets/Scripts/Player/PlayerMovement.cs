@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(TossGranade))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField, Range(0, 180f)] private float _rotationSmoothness;    // Коэффициент плавности поворота
@@ -128,7 +129,11 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetButtonDown("Fire1"))
         {
-            if (isAttack == false) gunShooting.Shoot();
+            if (isAttack == false)
+            {
+                gunShooting.Shoot();
+                tossGranade.OnFire();
+            }
             isAttack = true;
             
             //curArm = selectArm.ArmIndex;

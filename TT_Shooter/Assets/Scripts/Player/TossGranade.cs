@@ -27,10 +27,27 @@ public class TossGranade : MonoBehaviour
         
     }
 
-    public void OnToss(int numGranade = 0)
+    public void SetCurrentArm(int number)
+    {
+        currentArmNumber = number;
+    }
+
+    public void SetCurrentCranade(int number)
+    {
+        currentGranadeNumber = number;
+    }
+
+    public void OnFire()
+    {
+        if (armRight[currentArmNumber].activeSelf)
+        {
+            armRight[currentArmNumber].GetComponent<ArmFire>().Fire();
+        }
+    }
+
+    public void OnToss()
     {
         direction = transform.forward;
-        currentGranadeNumber = numGranade;
         armLeft[currentArmNumber].SetActive(true);
         armRight[currentArmNumber].SetActive(false);
         Invoke("BeginToss", 0.16f);
