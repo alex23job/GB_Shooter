@@ -61,7 +61,7 @@ public class GranadeControl : MonoBehaviour
                 {
                     IFireBarel fireBarel = hit.gameObject.GetComponent<IFireBarel>();
                     if ((fireBarel == null) && (hit.transform.parent != null)) fireBarel = hit.transform.parent.gameObject.GetComponent<IFireBarel>();
-                    print($"fireBarel={fireBarel}  parent={hit.transform.parent}");
+                    //print($"fireBarel={fireBarel}  parent={hit.transform.parent}");
                     if (fireBarel != null) fireBarel.OnFire(transform.position);
                     //TankControl tank = other.transform.parent.gameObject.GetComponent<TankControl>();
                     //if (tank != null) tank.OnFire(transform.position);
@@ -71,6 +71,15 @@ public class GranadeControl : MonoBehaviour
                     TankControl tank = hit.transform.parent.gameObject.GetComponent<TankControl>();
                     //TankControl tank = other.transform.parent.gameObject.GetComponent<TankControl>();
                     if (tank != null) tank.CabineMove(transform.position);
+                }
+                if (hit.CompareTag("Destructible"))
+                {
+                    Vector3 direction = hit.transform.position - transform.position;
+                    direction = new Vector3(3f, 3f, 3f) - direction;
+                    direction.y = 1f;
+                    Rigidbody hitRB = hit.transform.gameObject.GetComponent<Rigidbody>();
+                    if (hitRB != null) hitRB.AddForce(direction * 0.7f, ForceMode.Impulse);
+                    Destroy(hit.gameObject, 5f);
                 }
             }
 

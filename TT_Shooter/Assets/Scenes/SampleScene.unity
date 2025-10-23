@@ -5210,6 +5210,10 @@ PrefabInstance:
       propertyPath: ui_Control
       value: 
       objectReference: {fileID: 64145391}
+    - target: {fileID: 91922402384288783, guid: ccdbf5b148b6cb14c843b956e2d44310, type: 3}
+      propertyPath: speedRotation
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 6476450840952005358, guid: ccdbf5b148b6cb14c843b956e2d44310, type: 3}
       propertyPath: m_LocalScale.x
       value: 50
