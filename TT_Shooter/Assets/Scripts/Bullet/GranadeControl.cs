@@ -44,11 +44,11 @@ public class GranadeControl : MonoBehaviour
         if (typeGranate == 0)
         {
             // Получаем все коллайдеры в радиусе взрыва
-            Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 1.5f);
 
             foreach (Collider hit in colliders)
             {
-                print($"name={hit.name} tag={hit.transform.tag}");
+                //print($"name={hit.name} tag={hit.transform.tag}");
                 //// Находим Rigidbody, если он есть
                 //Rigidbody rb = hit.GetComponent<Rigidbody>();
 
@@ -59,12 +59,17 @@ public class GranadeControl : MonoBehaviour
                 //}
                 if (hit.CompareTag("Barel"))
                 {
-                    TankControl tank = other.transform.parent.gameObject.GetComponent<TankControl>();
-                    if (tank != null) tank.OnFire(transform.position);
+                    IFireBarel fireBarel = hit.gameObject.GetComponent<IFireBarel>();
+                    if ((fireBarel == null) && (hit.transform.parent != null)) fireBarel = hit.transform.parent.gameObject.GetComponent<IFireBarel>();
+                    print($"fireBarel={fireBarel}  parent={hit.transform.parent}");
+                    if (fireBarel != null) fireBarel.OnFire(transform.position);
+                    //TankControl tank = other.transform.parent.gameObject.GetComponent<TankControl>();
+                    //if (tank != null) tank.OnFire(transform.position);
                 }
                 if (hit.CompareTag("Cabine"))
                 {
-                    TankControl tank = other.transform.parent.gameObject.GetComponent<TankControl>();
+                    TankControl tank = hit.transform.parent.gameObject.GetComponent<TankControl>();
+                    //TankControl tank = other.transform.parent.gameObject.GetComponent<TankControl>();
                     if (tank != null) tank.CabineMove(transform.position);
                 }
             }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankControl : MonoBehaviour
+public class TankControl : MonoBehaviour, IFireBarel
 {
     [SerializeField] private ParticleSystem oilFire;
     [SerializeField] private GameObject cabine;
@@ -33,7 +33,7 @@ public class TankControl : MonoBehaviour
         if (direction.magnitude < 3)
         {
             oilFire.Play();
-            print("oilFire.Play ?");
+            print("oilFire.Play ? (OnFire)");
         }
     }
 
@@ -45,5 +45,11 @@ public class TankControl : MonoBehaviour
             cabineRb.isKinematic = false;
             cabineRb.AddForce(direction * cabineSpeed, ForceMode.Impulse);
         }
+    }
+
+    public void FireBarel()
+    {
+        print("oilFire.Play ? (FireBarel)");
+        oilFire.Play();
     }
 }

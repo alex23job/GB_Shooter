@@ -6,6 +6,7 @@ public class GunShooting : MonoBehaviour
 {
     [SerializeField] private float range = 100f; // Дальность стрельбы
     [SerializeField] private ParticleSystem impactEffect; // Частицы для отображения попадания
+    [SerializeField] private Material blackMat;
 
     private bool isMultiShoot = false;
     private float timer = 0.25f;
@@ -43,6 +44,13 @@ public class GunShooting : MonoBehaviour
             // Отображаем точку попадания
             Debug.Log("Попадание в объект: " + hit.transform.name);
 
+            if (hit.transform.CompareTag("Barel"))
+            {
+                IFireBarel fireBarel = hit.transform.gameObject.GetComponent<IFireBarel>();
+                if (fireBarel == null && hit.transform.parent != null) fireBarel = hit.transform.parent.gameObject.GetComponent<IFireBarel>();
+                if (fireBarel != null) fireBarel.FireBarel();
+            }
+
             // Показываем частицы в точке попадания
             if (impactEffect != null)
             {
@@ -51,10 +59,15 @@ public class GunShooting : MonoBehaviour
                 effect.Play();
                 Destroy(effect.gameObject, 1f);
 
-                //GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                //sph.transform.localScale = new Vector3(0.1f, 0.1f, 0.01f);
-                //sph.transform.position = hit.point;
-                //Destroy( sph , 2f);
+                if (hit.transform.name != "Cylinder")
+                {
+                    GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                    sph.transform.localScale = new Vector3(0.1f, 0.001f, 0.1f);
+                    sph.transform.GetComponent<MeshRenderer>().materials = new Material[1] { blackMat };
+                    sph.transform.position = hit.point;
+                    sph.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+                    Destroy(sph, 10f);
+                }
             }
         }
     }
