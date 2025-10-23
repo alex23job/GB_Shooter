@@ -127,19 +127,33 @@ public class PlayerMovement : MonoBehaviour
             }
             //gameObject.GetComponent<SelectArm>().NextArm();
         }
+        //if (Input.GetButton("Fire1"))
+        //{
+        //    if (isAttack && (tossGranade.CurrentArmNumber == 1))
+        //    {
+        //        gunShooting.Shoot(true);
+        //        tossGranade.OnFire();
+        //    }
+        //    isAttack = true;
+        //}
         if (Input.GetButtonDown("Fire1"))
         {
             if (isAttack == false)
             {
-                gunShooting.Shoot();
+                gunShooting.Shoot(tossGranade.CurrentArmNumber == 1);
                 tossGranade.OnFire();
             }
+                        
             isAttack = true;
             
             //curArm = selectArm.ArmIndex;
             //playSounds.PlayKick(curArm);
 
             Attack();
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            EndAttack();
         }
     }
     // Update is called once per frame
@@ -200,13 +214,15 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("IsJump", false);
         anim.SetBool("IsAttack", true);
             
-        Invoke("EndAttack", 0.6f);
+        if (tossGranade.CurrentArmNumber == 0) Invoke("EndAttack", 0.6f);
     }
 
     private void EndAttack()
     {
         anim.SetBool("IsAttack", false);
         isAttack = false;
+        tossGranade.OnFireStop();
+        gunShooting.StopMultiShoot();
     }
 
     private void Move(float input)

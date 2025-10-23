@@ -7,6 +7,9 @@ public class GunShooting : MonoBehaviour
     [SerializeField] private float range = 100f; // Дальность стрельбы
     [SerializeField] private ParticleSystem impactEffect; // Частицы для отображения попадания
 
+    private bool isMultiShoot = false;
+    private float timer = 0.25f;
+
     void Update()
     {
         // Проверяем нажатие левой кнопки мыши
@@ -14,10 +17,21 @@ public class GunShooting : MonoBehaviour
         //{
         //    Shoot();
         //}
+        if (isMultiShoot)
+        {
+            if (timer > 0) timer -= Time.deltaTime;
+            else
+            {
+                timer = 0.25f;
+                Shoot(true);
+            }
+        }
     }
 
-    public void Shoot()
+    public void Shoot(bool isMulti = false)
     {
+        if (isMulti) isMultiShoot = true;
+
         // Получаем направление стрельбы
         Vector3 forward = transform.forward;
         Ray ray = new Ray(transform.position, forward);
@@ -43,5 +57,10 @@ public class GunShooting : MonoBehaviour
                 //Destroy( sph , 2f);
             }
         }
+    }
+
+    public void StopMultiShoot()
+    {
+        isMultiShoot = false;
     }
 }

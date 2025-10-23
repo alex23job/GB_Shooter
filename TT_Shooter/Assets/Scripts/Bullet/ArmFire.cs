@@ -15,7 +15,8 @@ public class ArmFire : MonoBehaviour
     {
         //firePS = Instantiate(firePrefab);
         firePS = firePrefab;
-        firePS.transform.position = firePoint.position;        
+        firePS.transform.position = firePoint.position;
+        FirePause();
     }
 
     public void SetModeFire(bool fire)
@@ -27,7 +28,7 @@ public class ArmFire : MonoBehaviour
     {
         firePS.Play();
         if (!isFireMulti) Invoke("StopFire", 0.3f);
-        print($"arm={transform.name} is fire multi={isFireMulti}");
+        //print($"arm={transform.name} is fire multi={isFireMulti}");
     }
 
     public void StopFire()

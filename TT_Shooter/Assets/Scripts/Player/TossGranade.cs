@@ -15,6 +15,8 @@ public class TossGranade : MonoBehaviour
     private int currentGranadeNumber = 0;
     private Vector3 direction = Vector3.up;
 
+    public int CurrentArmNumber {  get => currentArmNumber; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +45,15 @@ public class TossGranade : MonoBehaviour
         {
             armRight[currentArmNumber].GetComponent<ArmFire>().Fire();
         }
+    }
+
+    public void OnFireStop()
+    {
+        if (armRight[currentArmNumber].activeSelf)
+        {
+            armRight[currentArmNumber].GetComponent<ArmFire>().StopFire();
+        }
+
     }
 
     public void OnToss()

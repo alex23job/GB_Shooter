@@ -8,11 +8,13 @@ public class PlayerControl : MonoBehaviour
 {
     private PlayerMovement playerMovement;
     private TossGranade tossGranade;
+    private PouchGranadeControl granadeControl;
 
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
         tossGranade = GetComponent<TossGranade>();
+        granadeControl = GetComponentInChildren<PouchGranadeControl>();
     }
     // Start is called before the first frame update
     void Start()
@@ -34,10 +36,12 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             tossGranade.SetCurrentCranade(0);
+            granadeControl.ViewGranads(0, 2);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             tossGranade.SetCurrentCranade(1);
+            granadeControl.ViewGranads(1, 2);
         }
     }
 
