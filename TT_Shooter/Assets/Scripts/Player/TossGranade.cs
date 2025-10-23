@@ -81,7 +81,7 @@ public class TossGranade : MonoBehaviour
             granade.transform.position = armRight[2 + currentGranadeNumber].transform.position;
             //Vector3 direction = transform.forward;
             direction.y = 1;
-            print($"forward={transform.forward}  dir={direction}");
+            //print($"forward={transform.forward}  dir={direction}");
             granade.GetComponent<GranadeControl>().SetParams(direction);
         }
         Invoke("ArmToRight", 1f);

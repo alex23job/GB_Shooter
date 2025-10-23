@@ -6,6 +6,7 @@ public class GranadeControl : MonoBehaviour
 {
     [SerializeField] private ParticleSystem effectBuff;
     [SerializeField] private bool isPlayerGranade = false;
+    [SerializeField] int typeGranate = 0;
 
     private Animator anim;
     private Rigidbody rb;
@@ -40,6 +41,35 @@ public class GranadeControl : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (typeGranate == 0)
+        {
+            // Получаем все коллайдеры в радиусе взрыва
+            Collider[] colliders = Physics.OverlapSphere(transform.position, 1f);
+
+            foreach (Collider hit in colliders)
+            {
+                print($"name={hit.name} tag={hit.transform.tag}");
+                //// Находим Rigidbody, если он есть
+                //Rigidbody rb = hit.GetComponent<Rigidbody>();
+
+                //if (rb != null)
+                //{
+                //    // Придаём импульс объекту
+                //    rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+                //}
+                if (hit.CompareTag("Barel"))
+                {
+                    TankControl tank = other.transform.parent.gameObject.GetComponent<TankControl>();
+                    if (tank != null) tank.OnFire(transform.position);
+                }
+                if (hit.CompareTag("Cabine"))
+                {
+                    TankControl tank = other.transform.parent.gameObject.GetComponent<TankControl>();
+                    if (tank != null) tank.CabineMove(transform.position);
+                }
+            }
+
+        }
         int mask = 1 << LayerMask.NameToLayer("Player");
         mask |= 1 << LayerMask.NameToLayer("Granade");
         //print($"mask={mask} other={other.name} other.gameObject.layer={other.gameObject.layer}  &&={(1 << other.gameObject.layer) & mask}");
@@ -50,5 +80,6 @@ public class GranadeControl : MonoBehaviour
             Destroy(effect.gameObject, 2f);
             if (false == isPlayerGranade) Destroy(gameObject, 0.1f);
         }
+        
     }
 }
