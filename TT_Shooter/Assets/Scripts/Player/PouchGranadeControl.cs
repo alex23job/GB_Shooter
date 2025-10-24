@@ -21,7 +21,7 @@ public class PouchGranadeControl : MonoBehaviour
         if (typeGranade == 0)
         {
             if (countCranads == 1) granads[0].gameObject.SetActive(true);
-            if (countCranads == 2)
+            if (countCranads >= 2)
             {
                 granads[0].gameObject.SetActive(true);
                 granads[1].gameObject.SetActive(true);
@@ -30,7 +30,7 @@ public class PouchGranadeControl : MonoBehaviour
         if (typeGranade == 1)
         {
             if (countCranads == 1) granads[2].gameObject.SetActive(true);
-            if (countCranads == 2)
+            if (countCranads >= 2)
             {
                 granads[2].gameObject.SetActive(true);
                 granads[3].gameObject.SetActive(true);

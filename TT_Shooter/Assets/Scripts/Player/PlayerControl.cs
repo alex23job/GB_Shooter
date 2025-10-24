@@ -48,7 +48,12 @@ public class PlayerControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            tossGranade.SetCurrentArmNumber(1);
+            if (inventory.CheckItem("Schmeiser"))
+            {
+                tossGranade.SetCurrentArmNumber(1);
+                currentArmNumber = 1;
+                ui_Control.ViewItemPanel(0, armUnits[currentArmNumber]);
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
@@ -57,8 +62,12 @@ public class PlayerControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
-            tossGranade.SetCurrentCranade(1);
-            granadeControl.ViewGranads(1, 2);
+            if (inventory.CheckItem("Granade"))
+            {
+                tossGranade.SetCurrentCranade(1);
+                granadeControl.ViewGranads(1, 2);
+                ui_Control.ViewItemPanel(1, granadeUnits[currentGranadeNumber]);
+            }
         }
     }
 
@@ -69,7 +78,21 @@ public class PlayerControl : MonoBehaviour
 
     public void OnArmNextClick(int num)
     {
-
+        if (num == 0)
+        {
+            currentArmNumber++;
+            currentArmNumber %= armUnits.Count;
+            ui_Control.ViewItemPanel(0, armUnits[currentArmNumber]);
+            tossGranade.SetCurrentArmNumber(currentArmNumber);
+        }
+        if (num == 1)
+        {
+            currentGranadeNumber++;
+            currentGranadeNumber %= granadeUnits.Count;
+            tossGranade.SetCurrentCranade(currentGranadeNumber);
+            granadeControl.ViewGranads(currentGranadeNumber, granadeUnits[currentGranadeNumber].ItemCount);
+            ui_Control.ViewItemPanel(1, granadeUnits[currentGranadeNumber]);
+        }
     }
 
     public void SetCurrentItem(InventoryObject item)
