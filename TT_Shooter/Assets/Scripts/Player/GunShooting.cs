@@ -32,6 +32,7 @@ public class GunShooting : MonoBehaviour
     public void Shoot(bool isMulti = false)
     {
         if (isMulti) isMultiShoot = true;
+        bool isMetka = true;
 
         // Получаем направление стрельбы
         Vector3 forward = transform.forward;
@@ -50,6 +51,12 @@ public class GunShooting : MonoBehaviour
                 if (fireBarel == null && hit.transform.parent != null) fireBarel = hit.transform.parent.gameObject.GetComponent<IFireBarel>();
                 if (fireBarel != null) fireBarel.FireBarel();
             }
+            if (hit.transform.CompareTag("Destroytible"))
+            {
+                HullControl hull = hit.transform.gameObject.GetComponent<HullControl>();
+                if (hull != null) hull.ViewInnerObject();
+                isMetka = false;
+            }
 
             // Показываем частицы в точке попадания
             if (impactEffect != null)
@@ -59,7 +66,7 @@ public class GunShooting : MonoBehaviour
                 effect.Play();
                 Destroy(effect.gameObject, 1f);
 
-                if (hit.transform.name != "Cylinder")
+                if (hit.transform.name != "Cylinder" && isMetka)
                 {
                     GameObject sph = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
                     sph.transform.localScale = new Vector3(0.1f, 0.001f, 0.1f);
