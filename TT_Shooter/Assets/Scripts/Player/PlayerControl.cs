@@ -10,6 +10,7 @@ public class PlayerControl : MonoBehaviour
     private TossGranade tossGranade;
     private PouchGranadeControl granadeControl;
     [SerializeField] private UI_Control ui_Control;
+    [SerializeField] private LevelControl levelControl;   
 
     private InventoryObject currentItem = null;
 
@@ -68,6 +69,7 @@ public class PlayerControl : MonoBehaviour
         ui_Control.ViewHint("");
         if (currentItem != null)
         {
+            if ((currentItem.gameObject.name == "BonusKey") && (levelControl != null)) levelControl.TakeKey();
             Destroy(currentItem.gameObject);
         }
     }
