@@ -16,27 +16,9 @@ public class InventoryItem : ScriptableObject
     [SerializeField]
     private int itemPrice;
 
-    private int itemCount = 0;
-    public int ItemCount { get; }
-
-    public bool CheckCount(int count)
-    {
-        return itemCount >= count;
-    }
-
     public string NameItem { get => itemName; } 
     public Sprite SpriteItem { get => itemSprite; }
-
-    public void ChangeCount(int zn)
-    {
-        if (zn < 0)
-        {
-            if (itemCount + zn < 0)
-            {
-                itemCount = 0;
-                return;
-            }
-        }
-        itemCount += zn;
-    }
+    public int ItemEffect { get => itemEffect; }
+    public string ItemType { get => itemType; }
+    public int Price { get => itemPrice; }
 }

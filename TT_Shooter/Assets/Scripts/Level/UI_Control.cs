@@ -28,7 +28,7 @@ public class UI_Control : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void ViewItemPanel(int num, InventoryItem item)
+    public void ViewItemPanel(int num, InventoryUnit unit)
     {
         if (num >= 0 && num < itemPanels.Length)
         {
@@ -36,9 +36,9 @@ public class UI_Control : MonoBehaviour
             Text txtCount = itemPanels[num].transform.GetChild(1).GetComponent<Text>();
             Text txtName = itemPanels[num].transform.GetChild(2).GetComponent<Text>();
 
-            imgItem.sprite = item.SpriteItem;
-            txtCount.text = item.ItemCount.ToString();
-            txtName.text = item.NameItem;
+            imgItem.sprite = unit.SpriteItem;
+            txtCount.text = unit.ItemCount.ToString();
+            txtName.text = unit.NameItem;
         }
     }
 

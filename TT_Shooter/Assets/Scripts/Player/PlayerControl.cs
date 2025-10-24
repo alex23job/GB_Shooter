@@ -10,9 +10,16 @@ public class PlayerControl : MonoBehaviour
     private TossGranade tossGranade;
     private PouchGranadeControl granadeControl;
     [SerializeField] private UI_Control ui_Control;
-    [SerializeField] private LevelControl levelControl;   
+    [SerializeField] private LevelControl levelControl;
+    [SerializeField] private InventoryItem[] items;
 
     private InventoryObject currentItem = null;
+
+    private Inventory inventory = null;
+    private List<InventoryUnit> armUnits = null;
+    private List<InventoryUnit> granadeUnits = null;
+    private int currentArmNumber = 0;
+    private int currentGranadeNumber = 0;
 
     private void Awake()
     {
@@ -23,7 +30,13 @@ public class PlayerControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        inventory = new Inventory();
+        inventory.AddItem(items[0]);
+        inventory.AddItem(items[1]);
+        armUnits = inventory.GetTypeItems("Arm");
+        granadeUnits = inventory.GetTypeItems("Granade");
+        ui_Control.ViewItemPanel(0, armUnits[0]);
+        ui_Control.ViewItemPanel(1, granadeUnits[0]);
     }
 
     // Update is called once per frame
@@ -69,7 +82,18 @@ public class PlayerControl : MonoBehaviour
         ui_Control.ViewHint("");
         if (currentItem != null)
         {
+            inventory.AddItem(currentItem.Item);
             if ((currentItem.gameObject.name == "BonusKey") && (levelControl != null)) levelControl.TakeKey();
+            if (currentItem.Item.ItemType == "Arm")
+            {
+                armUnits = inventory.GetTypeItems(currentItem.Item.ItemType);
+                ui_Control.ViewItemPanel(0, armUnits[currentArmNumber]);
+            }
+            if (currentItem.Item.ItemType == "Granade")
+            {
+                granadeUnits = inventory.GetTypeItems(currentItem.Item.ItemType);
+                ui_Control.ViewItemPanel(1, granadeUnits[currentGranadeNumber]);
+            }
             Destroy(currentItem.gameObject);
         }
     }
