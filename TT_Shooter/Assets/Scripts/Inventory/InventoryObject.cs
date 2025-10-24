@@ -42,6 +42,7 @@ public class InventoryObject : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            if (ui_Control != null) ui_Control.ViewHint("");
             PlayerControl playerControl = other.gameObject.GetComponent<PlayerControl>();
             if (playerControl != null)
             {

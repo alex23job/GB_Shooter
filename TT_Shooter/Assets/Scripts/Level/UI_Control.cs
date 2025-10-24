@@ -36,8 +36,12 @@ public class UI_Control : MonoBehaviour
 
     public void ViewHint(string hint)
     {
-        Text txtHint = hintPanel.transform.GetChild(0).GetComponent<Text>();
-        if (txtHint != null) txtHint.text = hint;
-        hintPanel.SetActive(true);
+        if (hint == "") hintPanel.SetActive(false);
+        else
+        {
+            Text txtHint = hintPanel.transform.GetChild(0).GetComponent<Text>();
+            if (txtHint != null) txtHint.text = hint;
+            hintPanel.SetActive(true);
+        }
     }
 }

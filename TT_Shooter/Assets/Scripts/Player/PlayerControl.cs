@@ -65,6 +65,7 @@ public class PlayerControl : MonoBehaviour
 
     public void TakeItem()
     {
+        ui_Control.ViewHint("");
         if (currentItem != null)
         {
             Destroy(currentItem.gameObject);
