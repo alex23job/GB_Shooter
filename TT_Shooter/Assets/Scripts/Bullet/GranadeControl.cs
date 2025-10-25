@@ -91,6 +91,7 @@ public class GranadeControl : MonoBehaviour
         {
             ParticleSystem effect = Instantiate(effectBuff, transform.position, Quaternion.Euler(new Vector3(-90f, 0, 0)));
             effect.Play();
+            effect.gameObject.GetComponent<AudioSource>().Play();
             Destroy(effect.gameObject, 2f);
             if (false == isPlayerGranade) Destroy(gameObject, 0.1f);
         }

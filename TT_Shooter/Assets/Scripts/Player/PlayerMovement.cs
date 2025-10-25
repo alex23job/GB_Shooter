@@ -175,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Преобразуем экранные координаты в мировые
         //Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
-        Vector3 worldMousePosition = new Vector3((mousePosition.x - Camera.main.pixelWidth / 2) / 10, 1, (mousePosition.y - Camera.main.pixelHeight / 2) / 10);
+        Vector3 worldMousePosition = new Vector3((mousePosition.x - Camera.main.pixelWidth / 2) / 10, transform.position.y, (mousePosition.y - Camera.main.pixelHeight / 2) / 10);
         //Camera.main.c
 
         // Получаем направление от персонажа к позиции мыши

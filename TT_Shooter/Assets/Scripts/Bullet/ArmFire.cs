@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ArmFire : MonoBehaviour
 {
+    [SerializeField] private AudioSource m_AudioSource;
     [SerializeField] private Transform firePoint;
     [SerializeField] private ParticleSystem firePrefab;
 
@@ -27,6 +28,7 @@ public class ArmFire : MonoBehaviour
     public void Fire()
     {
         if (firePS != null) firePS.Play();
+        if (m_AudioSource != null) m_AudioSource.Play();
         if (!isFireMulti) Invoke("StopFire", 0.3f);
         //print($"arm={transform.name} is fire multi={isFireMulti}");
     }
@@ -34,6 +36,7 @@ public class ArmFire : MonoBehaviour
     public void StopFire()
     {
         if (firePS != null) firePS.Stop();
+        if (m_AudioSource != null) m_AudioSource.Stop();
     }
 
     public void FirePause()

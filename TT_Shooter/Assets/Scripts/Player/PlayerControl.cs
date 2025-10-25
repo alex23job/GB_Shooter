@@ -12,6 +12,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private UI_Control ui_Control;
     [SerializeField] private LevelControl levelControl;
     [SerializeField] private InventoryItem[] items;
+    [SerializeField] private AudioSource audioSource;
 
     private InventoryObject currentItem = null;
 
@@ -26,6 +27,7 @@ public class PlayerControl : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         tossGranade = GetComponent<TossGranade>();
         granadeControl = GetComponentInChildren<PouchGranadeControl>();
+        audioSource = GetComponent<AudioSource>();
     }
     // Start is called before the first frame update
     void Start()
@@ -122,6 +124,7 @@ public class PlayerControl : MonoBehaviour
         ui_Control.ViewHint("");
         if (currentItem != null)
         {
+            audioSource.Play();
             inventory.AddItem(currentItem.Item);
             if ((currentItem.gameObject.name == "BonusKey") && (levelControl != null)) levelControl.TakeKey();
             if (currentItem.Item.ItemType == "Arm")
@@ -132,6 +135,7 @@ public class PlayerControl : MonoBehaviour
             if (currentItem.Item.ItemType == "Granade")
             {
                 granadeUnits = inventory.GetTypeItems(currentItem.Item.ItemType);
+                granadeControl.ViewGranads(currentGranadeNumber, granadeUnits[currentGranadeNumber].ItemCount);
                 ui_Control.ViewItemPanel(1, granadeUnits[currentGranadeNumber]);
             }
             Destroy(currentItem.gameObject);

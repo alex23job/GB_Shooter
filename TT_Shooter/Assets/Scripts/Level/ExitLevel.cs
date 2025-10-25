@@ -7,12 +7,13 @@ public class ExitLevel : MonoBehaviour
     [SerializeField] private LevelControl levelControl;
     [SerializeField] private bool isDoorBody = false;
     [SerializeField] private float speedUP = 10f;
+    [SerializeField] private AudioSource audioSource;
 
     private bool isOpen = false;
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -31,7 +32,11 @@ public class ExitLevel : MonoBehaviour
     {
         if (levelControl != null)
         {
-            if ((levelControl.IsKey) && (other.CompareTag("Player"))) levelControl.ViewEndPanel(); 
+            if ((levelControl.IsKey) && (other.CompareTag("Player")))
+            {
+                levelControl.ViewEndPanel();
+                if (audioSource != null) audioSource.Play();
+            }
         }
     }
 

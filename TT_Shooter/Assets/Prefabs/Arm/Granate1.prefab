@@ -149,3 +149,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectBuff: {fileID: 9050741044660565567, guid: 51c492151d0e63541a54b57e4f789ef1, type: 3}
+  isPlayerGranade: 0
+  typeGranate: 0
