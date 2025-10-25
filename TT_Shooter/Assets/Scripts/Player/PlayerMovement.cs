@@ -173,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void TurnToCursor(Vector3 mousePosition)
     {
+        if (Input.GetMouseButton(1) == false) return;
         // Преобразуем экранные координаты в мировые
         //Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, Camera.main.nearClipPlane));
         Vector3 worldMousePosition = new Vector3((mousePosition.x - Camera.main.pixelWidth / 2) / 10, transform.position.y, (mousePosition.y - Camera.main.pixelHeight / 2) / 10);

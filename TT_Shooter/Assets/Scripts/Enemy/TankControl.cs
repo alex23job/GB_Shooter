@@ -6,6 +6,7 @@ public class TankControl : MonoBehaviour, IFireBarel
 {
     [SerializeField] private ParticleSystem oilFire;
     [SerializeField] private GameObject cabine;
+    [SerializeField] private GameObject fuelTank;
     [SerializeField] private float cabineSpeed = 5f;
     
     private Rigidbody cabineRb;
@@ -23,7 +24,7 @@ public class TankControl : MonoBehaviour, IFireBarel
 
     public void OnFire(Vector3 granatePosition)
     {
-        Vector3 direction = cabine.transform.position - granatePosition;
+        Vector3 direction = fuelTank.transform.position - granatePosition;
         if (direction.magnitude < 3)
         {
             oilFire.Play();

@@ -34,9 +34,14 @@ public class GunShooting : MonoBehaviour
         if (isMulti) isMultiShoot = true;
         bool isMetka = true;
 
+        Vector3 beginRay = transform.position;
+        beginRay.y += 0.1f;
+
         // Получаем направление стрельбы
         Vector3 forward = transform.forward;
-        Ray ray = new Ray(transform.position, forward);
+        //Ray ray = new Ray(transform.position, forward);
+        Ray ray = new Ray(beginRay, forward);
+        //print($"begin={beginRay} dir={forward}");
 
         // Выполняем Raycast
         RaycastHit hit;

@@ -61,7 +61,7 @@ public class GranadeControl : MonoBehaviour
                 {
                     IFireBarel fireBarel = hit.gameObject.GetComponent<IFireBarel>();
                     if ((fireBarel == null) && (hit.transform.parent != null)) fireBarel = hit.transform.parent.gameObject.GetComponent<IFireBarel>();
-                    //print($"fireBarel={fireBarel}  parent={hit.transform.parent}");
+                    print($"fireBarel={fireBarel}  parent={hit.transform.parent}");
                     if (fireBarel != null) fireBarel.OnFire(transform.position);
                     //TankControl tank = other.transform.parent.gameObject.GetComponent<TankControl>();
                     //if (tank != null) tank.OnFire(transform.position);
