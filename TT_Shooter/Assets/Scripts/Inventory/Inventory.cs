@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Unity.VisualScripting.FullSerializer;
+//using UnityEngine;
 
 [Serializable]
 public class Inventory
@@ -28,7 +31,7 @@ public class Inventory
                 break;
             }
         }
-        if (isNew) items.Add(new InventoryUnit(newItem));
+        if (isNew) items.Add(new InventoryUnit(newItem, count));
     }
 
     /// <summary>
@@ -43,6 +46,7 @@ public class Inventory
         {
             if (item.CmpType(type)) res.Add(item);
         }
+        //UnityEngine.Debug.Log($"GetTypeItems for type={type}  count={res.Count}");
         return res;
     }
 

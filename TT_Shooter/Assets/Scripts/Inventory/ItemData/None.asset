@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: None
   m_EditorClassIdentifier: 
   itemName: none
-  itemType: Arm
-  itemSprite: {fileID: 21300000, guid: ec35fe4f01b4d4d458a20b09bea63911, type: 3}
-  itemEffect: 10
-  itemPrice: 400
+  itemType: none
+  itemSprite: {fileID: 21300000, guid: bae6dac537cbec043904e87969fbb995, type: 3}
+  itemEffect: 0
+  itemPrice: 0

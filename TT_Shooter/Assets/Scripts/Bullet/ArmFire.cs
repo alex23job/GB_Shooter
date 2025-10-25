@@ -26,14 +26,14 @@ public class ArmFire : MonoBehaviour
     
     public void Fire()
     {
-        firePS.Play();
+        if (firePS != null) firePS.Play();
         if (!isFireMulti) Invoke("StopFire", 0.3f);
         //print($"arm={transform.name} is fire multi={isFireMulti}");
     }
 
     public void StopFire()
     {
-        firePS.Stop();
+        if (firePS != null) firePS.Stop();
     }
 
     public void FirePause()

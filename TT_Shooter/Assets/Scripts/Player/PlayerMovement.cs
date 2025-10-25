@@ -125,8 +125,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isGranade == false)
             {
-                isGranade = true;
-                Granade();
+                if (playerControl.CheckCurrentGranadeAndDecr())
+                {
+                    isGranade = true;
+                    Granade();
+                }
             }
             //gameObject.GetComponent<SelectArm>().NextArm();
         }
@@ -156,7 +159,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetButtonUp("Fire1"))
         {
-            EndAttack();
+            if (isAttack) EndAttack();
         }
     }
     // Update is called once per frame

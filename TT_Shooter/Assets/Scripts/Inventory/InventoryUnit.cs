@@ -15,10 +15,10 @@ public class InventoryUnit
     public int Price { get => item.Price; }
 
     public InventoryUnit() { }
-    public InventoryUnit(InventoryItem item)
+    public InventoryUnit(InventoryItem item, int count = 1)
     {
         this.item = item;
-        unitCount = 1;
+        unitCount = count;
     }
 
     public bool CheckCount(int count)

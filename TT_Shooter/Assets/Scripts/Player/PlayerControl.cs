@@ -32,7 +32,7 @@ public class PlayerControl : MonoBehaviour
     {
         inventory = new Inventory();
         inventory.AddItem(items[0]);
-        inventory.AddItem(items[1]);
+        inventory.AddItem(items[1], 10);
         armUnits = inventory.GetTypeItems("Arm");
         granadeUnits = inventory.GetTypeItems("Granade");
         ui_Control.ViewItemPanel(0, armUnits[0]);
@@ -45,6 +45,8 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             tossGranade.SetCurrentArmNumber(0);
+            currentArmNumber = 0;
+            ui_Control.ViewItemPanel(0, armUnits[currentArmNumber]);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -57,18 +59,33 @@ public class PlayerControl : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
+            currentGranadeNumber = 0;
             tossGranade.SetCurrentCranade(0);
             granadeControl.ViewGranads(0, 2);
+            ui_Control.ViewItemPanel(1, granadeUnits[currentGranadeNumber]);
         }
         if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             if (inventory.CheckItem("Granade"))
             {
+                currentGranadeNumber = 1;
                 tossGranade.SetCurrentCranade(1);
                 granadeControl.ViewGranads(1, 2);
                 ui_Control.ViewItemPanel(1, granadeUnits[currentGranadeNumber]);
             }
         }
+    }
+
+    public bool CheckCurrentGranadeAndDecr()
+    {
+        if (inventory.DecrItem(granadeUnits[currentGranadeNumber].NameItem, 1))
+        {
+            granadeUnits = inventory.GetTypeItems("Granade");
+            granadeControl.ViewGranads(currentGranadeNumber, granadeUnits[currentGranadeNumber].ItemCount);
+            ui_Control.ViewItemPanel(1, granadeUnits[currentGranadeNumber]);
+            return true;
+        }
+        return false;
     }
 
     public void ChangeHP(int value)
@@ -82,8 +99,8 @@ public class PlayerControl : MonoBehaviour
         {
             currentArmNumber++;
             currentArmNumber %= armUnits.Count;
-            ui_Control.ViewItemPanel(0, armUnits[currentArmNumber]);
             tossGranade.SetCurrentArmNumber(currentArmNumber);
+            ui_Control.ViewItemPanel(0, armUnits[currentArmNumber]);            
         }
         if (num == 1)
         {

@@ -43,7 +43,7 @@ public class GunShooting : MonoBehaviour
         if (Physics.Raycast(ray, out hit, range))
         {
             // Отображаем точку попадания
-            Debug.Log("Попадание в объект: " + hit.transform.name);
+            //Debug.Log("Попадание в объект: " + hit.transform.name);
 
             if (hit.transform.CompareTag("Barel"))
             {
