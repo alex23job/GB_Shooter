@@ -1,6 +1,6 @@
 Ткаченко Александр Александрович
 
-Билд игры лежит по ссылке https://disk.yandex.ru/d/7WxfQ7DURWahjw Небольшое виде по прохождению игры лежит по ссылке https://disk.yandex.ru/i/9q_-3KaDIEpZpQ
+Билд игры лежит по ссылке https://disk.yandex.ru/d/VNpgG96j96bhJQ Небольшое виде по прохождению игры лежит по ссылке https://disk.yandex.ru/i/9q_-3KaDIEpZpQ
 
 Пока игра похожа на песочницу или обучающий уровень.
 
