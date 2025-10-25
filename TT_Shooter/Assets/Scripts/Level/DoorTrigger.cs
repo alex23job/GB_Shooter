@@ -32,6 +32,21 @@ public class DoorTrigger : MonoBehaviour
                         door.GetComponent<ExitLevel>().DoorOpen();
                     }
                 }
+                else
+                {
+                    levelControl.ViewHintPanel($"Найдите ключ чтобы открыть дверь !");
+                }
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            if (levelControl != null)
+            {
+                levelControl.ViewHintPanel("");
             }
         }
     }
